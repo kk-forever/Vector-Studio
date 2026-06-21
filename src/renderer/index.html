@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vector Studio</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">VS</span>
+        <div>
+          <h1>Vector Studio</h1>
+          <p>SVG、PNG、JPG、PDF 本地转换</p>
+        </div>
+      </div>
+
+      <nav class="mode-tabs" aria-label="转换模式">
+        <button class="tab-button active" type="button" data-tab="svg">SVG 转 PNG/JPG/PDF</button>
+        <button class="tab-button" type="button" data-tab="raster">PNG/JPG 转 SVG/PDF</button>
+      </nav>
+
+      <section class="output-settings">
+        <strong>输出设置</strong>
+        <label>
+          输出目录
+          <div class="path-row">
+            <input id="outputDirectoryInput" type="text" readonly placeholder="未选择时会弹出另存为窗口">
+            <button type="button" id="chooseOutputDirectoryButton">选择</button>
+          </div>
+        </label>
+        <label>
+          文件名模板
+          <input id="outputTemplateInput" type="text" value="{name}-{mode}.{ext}">
+        </label>
+        <button type="button" id="resetOutputSettingsButton">重置默认</button>
+      </section>
+
+      <section class="status-panel" aria-live="polite">
+        <strong>状态</strong>
+        <p id="statusText">请选择一个文件开始。</p>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <section class="tool-panel active" id="svgPanel">
+        <header class="panel-header">
+          <div>
+            <h2>矢量转位图 / PDF</h2>
+            <p>导入 SVG，输出 PNG、JPG 或矢量 PDF。</p>
+          </div>
+          <button class="primary-button" type="button" id="openSvgButton">选择 SVG</button>
+        </header>
+
+        <div class="control-grid">
+          <label>
+            宽度
+            <input id="svgWidthInput" type="number" min="1" max="16384" value="1024">
+          </label>
+          <label>
+            高度
+            <input id="svgHeightInput" type="number" min="1" max="16384" value="1024">
+          </label>
+          <label>
+            JPG 质量
+            <input id="jpegQualityInput" type="range" min="0.1" max="1" step="0.01" value="0.92">
+          </label>
+          <label>
+            JPG 背景
+            <input id="jpgBackgroundInput" type="color" value="#ffffff">
+          </label>
+        </div>
+
+        <div class="preview-grid">
+          <article class="preview-pane">
+            <header>源 SVG</header>
+            <div class="preview-surface" id="svgSourcePreview"></div>
+          </article>
+          <article class="preview-pane">
+            <header>导出预览</header>
+            <canvas class="preview-canvas" id="svgRasterCanvas"></canvas>
+          </article>
+        </div>
+
+        <div class="action-row">
+          <button type="button" id="savePngButton" disabled>导出 PNG</button>
+          <button type="button" id="savePngAsButton" disabled>PNG 另存为...</button>
+          <button type="button" id="saveJpgButton" disabled>导出 JPG</button>
+          <button type="button" id="saveJpgAsButton" disabled>JPG 另存为...</button>
+          <button type="button" id="saveSvgPdfButton" disabled>导出 PDF</button>
+          <button type="button" id="saveSvgPdfAsButton" disabled>PDF 另存为...</button>
+        </div>
+      </section>
+
+      <section class="tool-panel" id="rasterPanel">
+        <header class="panel-header">
+          <div>
+            <h2>位图转 SVG / PDF</h2>
+            <p>导入 PNG/JPG，默认保真输出，也可切换为矢量描摹。</p>
+          </div>
+          <button class="primary-button" type="button" id="openRasterButton">选择 PNG/JPG</button>
+        </header>
+
+        <div class="mode-choice" role="radiogroup" aria-label="位图输出方式">
+          <label>
+            <input type="radio" name="rasterMode" id="rasterModeFaithful" value="faithful" checked>
+            保真嵌入
+          </label>
+          <label>
+            <input type="radio" name="rasterMode" id="rasterModeTrace" value="trace">
+            矢量描摹
+          </label>
+        </div>
+
+        <div class="control-grid trace-controls hidden" id="traceControls">
+          <label>
+            颜色数量
+            <input id="colorCountInput" type="range" min="2" max="64" step="1" value="24">
+          </label>
+          <label>
+            去噪强度
+            <input id="pathOmitInput" type="range" min="0" max="128" step="1" value="6">
+          </label>
+        </div>
+
+        <div class="preview-grid">
+          <article class="preview-pane">
+            <header>源位图</header>
+            <div class="preview-surface"><img id="rasterSourceImage" alt=""></div>
+          </article>
+          <article class="preview-pane">
+            <header>输出预览</header>
+            <div class="preview-surface" id="vectorPreview"></div>
+          </article>
+        </div>
+
+        <div class="action-row">
+          <button type="button" id="saveVectorSvgButton" disabled>导出 SVG</button>
+          <button type="button" id="saveVectorSvgAsButton" disabled>SVG 另存为...</button>
+          <button type="button" id="saveVectorPdfButton" disabled>导出 PDF</button>
+          <button type="button" id="saveVectorPdfAsButton" disabled>PDF 另存为...</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

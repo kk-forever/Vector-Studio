@@ -1,0 +1,7 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#fffaf0"/>
+  <circle cx="205" cy="180" r="92" fill="#204c3f"/>
+  <path d="M170 188l38 38 82-98" fill="none" stroke="#fffaf0" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="335" y="165" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="44" font-weight="700" fill="#17221d">Vector</text>
+  <text x="335" y="220" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="36" fill="#244d73">Studio</text>
+</svg>

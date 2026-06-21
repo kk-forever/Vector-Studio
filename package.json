@@ -1,0 +1,42 @@
+{
+  "name": "vector-raster-converter",
+  "version": "1.0.0",
+  "description": "A local Electron app for SVG, PNG, JPG, and PDF conversion.",
+  "main": "src/main.js",
+  "private": true,
+  "productName": "Vector Studio",
+  "scripts": {
+    "start": "set ELECTRON_RUN_AS_NODE=& electron .",
+    "lint": "node scripts/lint.js",
+    "test": "node --test tests/*.test.js",
+    "check": "npm run lint && npm test",
+    "pack:win": "electron-builder --win --dir",
+    "dist:win": "electron-builder --win --dir"
+  },
+  "dependencies": {
+    "imagetracerjs": "^1.2.6"
+  },
+  "devDependencies": {
+    "electron": "^37.2.0",
+    "electron-builder": "^26.15.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "build": {
+    "appId": "com.vectorstudio.converter",
+    "productName": "Vector Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "dir"
+      ]
+    }
+  }
+}
