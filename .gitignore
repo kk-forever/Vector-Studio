@@ -1,4 +1,4 @@
-﻿node_modules/
+node_modules/
 npm-debug.log*
 .DS_Store
 *.tmp
@@ -7,3 +7,4 @@ electron-v*-win32-x64.zip
 dist/
 release/
 *.zip
+*.dmg

@@ -1,6 +1,7 @@
-const { readdirSync } = require("node:fs");
-const { join, extname } = require("node:path");
-const { spawnSync } = require("node:child_process");
+const { readFileSync, readdirSync } = require("node:fs");
+const { join, extname, relative } = require("node:path");
+const vm = require("node:vm");
+const Module = require("node:module");
 
 const ROOT = join(__dirname, "..");
 const TARGETS = ["src", "tests", "scripts"];
@@ -16,18 +17,21 @@ function listJavaScriptFiles(dir) {
   });
 }
 
+function checkSyntax(file) {
+  const source = readFileSync(file, "utf8");
+  const wrappedSource = Module.wrap(source);
+  new vm.Script(wrappedSource, { filename: file });
+}
+
 const files = TARGETS.flatMap((target) => listJavaScriptFiles(join(ROOT, target)));
 let failed = false;
 
 for (const file of files) {
-  const result = spawnSync(process.execPath, ["--check", file], {
-    cwd: ROOT,
-    encoding: "utf8"
-  });
-
-  if (result.status !== 0) {
+  try {
+    checkSyntax(file);
+  } catch (error) {
     failed = true;
-    process.stderr.write(result.stderr || result.stdout);
+    process.stderr.write(`${relative(ROOT, file)}\n${error.message}\n`);
   }
 }
 
